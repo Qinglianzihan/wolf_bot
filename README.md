@@ -16,7 +16,7 @@
 
 1. 确保已安装Python环境
 2. 安装依赖包（建议添加requirements.txt文件列出具体依赖）
-3. 在config.json中配置模型和API KEY
+3. 在config.json中配置模型和API KEY，若使用自建/代理站点可在条目中添加`base_url`（只需填主域名，如`https://ai.hybgzs.com`，程序会自动补全`/v1`后缀）
 
 ### 2. 启动游戏
 

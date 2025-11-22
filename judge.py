@@ -5,9 +5,9 @@ import json
 
 
 class Judge:
-    def __init__(self, game, model_name, api_key):
+    def __init__(self, game, model_name, api_key, base_url=None):
         self.game = game
-        self.model = BuildModel(model_name, api_key, force_json=True)
+        self.model = BuildModel(model_name, api_key, force_json=True, base_url=base_url)
     
     '''
     根据当前的游戏状态，判断胜负，返回三种情况：
