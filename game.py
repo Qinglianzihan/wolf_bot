@@ -101,10 +101,12 @@ class WerewolfGame:
                 if str(player.get("model_name", "")).lower() == "human":
                     player["model_name"] = "human"
                     player["api_key"] = ""
+                    player["base_url"] = ""
                 else:
                     model = models[assigned[assign_idx]]
                     player["model_name"] = model["model_name"]
                     player["api_key"] = model["api_key"]
+                    player["base_url"] = model.get("base_url", "")
                     assign_idx += 1
 
         if config["randomize_roles"]:
@@ -121,7 +123,13 @@ class WerewolfGame:
                 
         # 使用配置文件中的模型和API key
         self.players = [
-            role(i + 1, config["players"][i]["model_name"], config["players"][i]["api_key"], self) 
+            role(
+                i + 1,
+                config["players"][i]["model_name"],
+                config["players"][i]["api_key"],
+                self,
+                config["players"][i].get("base_url")
+            )
             for i, role in enumerate(roles)
         ]
         
@@ -137,7 +145,7 @@ class WerewolfGame:
                 print(f"{player.player_index}号玩家的角色是{player.role_type}, 模型使用{player.model.model_name}")
             
         # 创建判决者
-        self.judge = Judge(self, config["judge"]["model_name"], config["judge"]["api_key"])
+        self.judge = Judge(self, config["judge"]["model_name"], config["judge"]["api_key"], config["judge"].get("base_url"))
 
     def toggle_day_night(self):
         self.history.toggle_day_night()

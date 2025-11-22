@@ -1,0 +1,37 @@
+{
+  "display_role": true,
+  "display_thinking": true,
+  "display_witch_action": true,
+  "display_wolf_action": true,
+  "display_hunter_action": true,
+  "display_divine_action": true,
+  "display_vote_action": true,
+  "display_model": true,
+  "auto_play": true,
+
+  "random_model": false,
+  "models": [
+    {
+      "model_name": "gpt-4o-mini",
+      "api_key": "YOUR_API_KEY",
+      "base_url": "https://ai.hybgzs.com"
+    }
+  ],
+
+  "randomize_roles": false,
+  "randomize_position": false,
+
+  "players": [
+    { "role": "狼人", "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" },
+    { "role": "狼人", "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" },
+    { "role": "狼人", "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" },
+    { "role": "预言家", "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" },
+    { "role": "女巫", "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" },
+    { "role": "猎人", "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" },
+    { "role": "村民", "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" },
+    { "role": "村民", "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" },
+    { "role": "村民", "model_name": "human", "api_key": "", "base_url": "" }
+  ],
+
+  "judge": { "model_name": "gpt-4o-mini", "api_key": "YOUR_API_KEY", "base_url": "https://ai.hybgzs.com" }
+}

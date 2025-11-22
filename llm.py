@@ -15,6 +15,16 @@ import os
 
 logger = logging.getLogger(__name__)
 
+
+def normalize_base_url(base_url: str | None) -> str | None:
+    """Ensure a provided base_url ends with /v1 to match OpenAI-style APIs."""
+    if not base_url:
+        return None
+    cleaned = base_url.rstrip('/')
+    if cleaned.endswith('/v1'):
+        return cleaned
+    return f"{cleaned}/v1"
+
 class BaseLlm():
     def __init__(self, model_name, force_json=False):
         
@@ -307,10 +317,14 @@ class HumanLlm(BaseLlm):
         pass
 
 class OpenAILlm(BaseLlm):
-    def __init__(self, model_name, api_key, force_json=False):
+    def __init__(self, model_name, api_key, force_json=False, base_url=None):
         super().__init__(model_name, force_json)
         self.api_key = api_key
-        self.client = OpenAI(api_key=self.api_key, timeout=1800)
+        self.base_url = normalize_base_url(base_url)
+        client_kwargs = {"api_key": self.api_key, "timeout": 1800}
+        if self.base_url:
+            client_kwargs["base_url"] = self.base_url
+        self.client = OpenAI(**client_kwargs)
 
     def generate(self, message, chat_history=[]):
         messages = self.prepare_messages(message, chat_history)
@@ -426,7 +440,7 @@ class OpenRouterLlm(BaseLlm):
         return self.openai_like_generate(messages, stream=True)
     
 
-def BuildModel(model_name, api_key, force_json=False):
+def BuildModel(model_name, api_key, force_json=False, base_url=None):
     if model_name in M302LLM_SUPPORTED_MODELS:
         return M302Llm(model_name, api_key, force_json)
     elif model_name in SILICONFLOW_SUPPORTED_MODELS:
@@ -452,8 +466,10 @@ def BuildModel(model_name, api_key, force_json=False):
     elif model_name in XAIREASON_SUPPORTED_MODELS:
         return XAIReason(model_name, api_key, force_json)
     elif model_name in OPENAI_SUPPORTED_MODELS:
-        return OpenAILlm(model_name, api_key, force_json)
+        return OpenAILlm(model_name, api_key, force_json, base_url)
     elif model_name in OPENROUTER_SUPPORTED_MODELS:
         return OpenRouterLlm(model_name, api_key, force_json)
+    elif base_url:
+        return OpenAILlm(model_name, api_key, force_json, base_url)
     else:
         raise ValueError("未知的模型名称:", model_name)

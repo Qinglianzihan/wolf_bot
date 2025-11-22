@@ -8,12 +8,12 @@ from datetime import datetime
 import random
 
 class BaseRole:
-    def __init__(self, player_index, role_type, model_name, api_key, game):
+    def __init__(self, player_index, role_type, model_name, api_key, game, base_url=None):
         self.player_index = player_index
         self.role_type = role_type
         self.is_alive = True
         self.game = game
-        self.model = BuildModel(model_name, api_key, force_json=True) 
+        self.model = BuildModel(model_name, api_key, force_json=True, base_url=base_url)
 
 
     def __str__(self):
@@ -188,12 +188,12 @@ class BaseRole:
     
         
 class Villager(BaseRole):
-    def __init__(self, player_index, model_name, api_key,  game):
-        super().__init__(player_index, "村民", model_name, api_key, game)
-    
+    def __init__(self, player_index, model_name, api_key,  game, base_url=None):
+        super().__init__(player_index, "村民", model_name, api_key, game, base_url=base_url)
+
 class Hunter(BaseRole):
-    def __init__(self, player_index, model_name, api_key,  game):
-        super().__init__(player_index, "猎人", model_name, api_key,  game)
+    def __init__(self, player_index, model_name, api_key,  game, base_url=None):
+        super().__init__(player_index, "猎人", model_name, api_key,  game, base_url=base_url)
     
     def make_extra_data(self):
         extra_data = {
@@ -213,8 +213,8 @@ class Hunter(BaseRole):
 
 
 class Seer(BaseRole):
-    def __init__(self, player_index, model_name, api_key, game):
-        super().__init__(player_index, "预言家", model_name, api_key, game)
+    def __init__(self, player_index, model_name, api_key, game, base_url=None):
+        super().__init__(player_index, "预言家", model_name, api_key, game, base_url=base_url)
         self.divine_result = []
 
     def make_extra_data(self):
@@ -250,8 +250,8 @@ class Seer(BaseRole):
     
 
 class Wolf(BaseRole):
-    def __init__(self, player_index, model_name, api_key,  game):
-        super().__init__(player_index, "狼人", model_name, api_key,  game)
+    def __init__(self, player_index, model_name, api_key,  game, base_url=None):
+        super().__init__(player_index, "狼人", model_name, api_key,  game, base_url=base_url)
     
 
     def make_extra_data(self):
@@ -300,8 +300,8 @@ class Wolf(BaseRole):
 
 
 class Witch(BaseRole):
-    def __init__(self, player_index, model_name, api_key,  game):
-        super().__init__(player_index, "女巫", model_name, api_key,  game)
+    def __init__(self, player_index, model_name, api_key,  game, base_url=None):
+        super().__init__(player_index, "女巫", model_name, api_key,  game, base_url=base_url)
         self.cured_someone = 0
         self.poisoned_someone = -1
     
